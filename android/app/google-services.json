@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "935853987220",
+    "project_id": "futscore-3ee03",
+    "storage_bucket": "futscore-3ee03.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:935853987220:android:ea792e218304535000ab81",
+        "android_client_info": {
+          "package_name": "com.example.futscore"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCl1z-GwEYXa-wzp9BYTnUPd9CHBaVvFXU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
