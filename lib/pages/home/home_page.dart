@@ -6,8 +6,6 @@ import 'package:provider/provider.dart';
 import '/services/auth_service.dart';
 import '../auth/login_page.dart';
 import '../players/player_list_page.dart';
-import 'package:futscore/models/player_model.dart';
-import 'package:futscore/repositories/player_repository.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -15,9 +13,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
-    final matchRepository = Provider.of<MatchRepository>(
-      context,
-    ); // Acessa o MatchRepository
+    final matchRepository = Provider.of<MatchRepository>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -119,13 +115,8 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(
-            height: 30,
-            thickness: 2,
-            indent: 20,
-            endIndent: 20,
-          ), // Divisor
-          // Seção de Partidas Ativas/Agendadas
+          const Divider(height: 30, thickness: 2, indent: 20, endIndent: 20),
+
           Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 24.0,
@@ -145,8 +136,7 @@ class HomePage extends StatelessWidget {
           ),
           Expanded(
             child: StreamBuilder<List<Map<String, dynamic>>>(
-              stream: matchRepository
-                  .getMyMatches(), // Obtém as partidas do usuário
+              stream: matchRepository.getMyMatches(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
@@ -182,11 +172,8 @@ class HomePage extends StatelessWidget {
                     final match = matches[index];
                     final matchDate = (match['matchDate'] as Timestamp)
                         .toDate();
-                    final teams =
-                        match['teams'] as List<dynamic>? ??
-                        []; // Garante que teams é uma lista
+                    final teams = match['teams'] as List<dynamic>? ?? [];
 
-                    // Extrai informações dos times, se existirem
                     String team1Name = 'Time A';
                     String team2Name = 'Time B';
                     int team1Score = 0;
@@ -201,12 +188,8 @@ class HomePage extends StatelessWidget {
                       }
                     }
 
-                    // Calcula o tempo decorrido ou restante (simplificado)
                     String matchTimeStatus = 'Agendado';
                     if (match['status'] == 'in_progress') {
-                      // Para um tempo mais preciso, precisaríamos de um campo 'startTime' no Firestore
-                      // e calcular a diferença com o tempo atual.
-                      // Por simplicidade, vamos apenas indicar "Em Andamento".
                       matchTimeStatus = 'Em Andamento';
                     } else if (match['status'] == 'completed') {
                       matchTimeStatus = 'Finalizado';
@@ -279,7 +262,7 @@ class HomePage extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(height: 10),
-                            // Indicador de "AO VIVO" se a partida estiver em andamento
+
                             if (match['status'] == 'in_progress')
                               Container(
                                 padding: const EdgeInsets.symmetric(
@@ -300,7 +283,7 @@ class HomePage extends StatelessWidget {
                                 ),
                               ),
                             const SizedBox(height: 10),
-                            // Detalhes da partida (opcional)
+
                             Text(
                               'Aluguel: ${match['fieldRentalTimeMinutes']} min | Duração: ${match['matchDurationMinutes']} min | Limite Gols: ${match['goalLimit']}',
                               style: TextStyle(

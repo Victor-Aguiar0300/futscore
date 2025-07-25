@@ -4,12 +4,13 @@ import 'package:provider/provider.dart';
 import 'pages/auth/login_page.dart';
 import 'services/auth_service.dart';
 import 'repositories/player_repository.dart';
-import 'repositories/match_repository.dart'; // Certifique-se que esta linha está correta
+import 'repositories/match_repository.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(const MyApp());
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -21,8 +22,6 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthService()),
         Provider<PlayerRepository>(create: (_) => PlayerRepository()),
-        // Verifique se a classe MatchRepository está definida corretamente
-        // e se o import acima está apontando para o arquivo correto.
         Provider<MatchRepository>(create: (_) => MatchRepository()),
       ],
       child: MaterialApp(
